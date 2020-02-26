@@ -1,11 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-
-const App = () => (
-  <div>
-    123
-  </div>
-);
+import App from './views/App';
 
 ReactDom.render(
   <App />,

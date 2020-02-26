@@ -25,5 +25,11 @@ module.exports = {
       }
     ],
     ['@babel/plugin-proposal-class-properties', { loose: true }],
+    // 'transform-es2015-shorthand-properties',
+    ["import", {
+      "libraryName": "antd",
+      "libraryDirectory": "es",
+      "style": true // `style: true` 会加载 less 文件
+    }]
   ]
 };

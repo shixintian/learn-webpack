@@ -2,18 +2,29 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin'); // 通过 npm 安装
 const HappyPack = require('happypack');
 const os = require('os');
+const utils = require('./utils');
 
+const { resolve } = utils;
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 
+
+
 module.exports = {
+  context: path.resolve(__dirname, '../'),
   entry: './src/index.js',
   mode: 'development',
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    path: resolve('dist'),
+    filename: '[name].js'
   },
   module: {
     rules: [
+      {
+        enforce: 'pre',
+        test: /\.js$/,
+        include: [resolve('src')],
+        loader: 'happypack/loader?id=eslint',
+      },
       {
         test: /\.css$/,
         use: [
@@ -23,19 +34,34 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'happypack/loader?id=babel',
-        include: [path.resolve(__dirname, 'src')],
+        include: [resolve('src')],
         exclude: /node_modules/, // /node_modules\/(?![uc-fun|vis])/, 不会去查找的路径
       },
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({template: './src/index.html'}),
+    new HtmlWebpackPlugin({
+      filename: resolve('dist/index.html'),
+      template: resolve('public/index.html'),
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+      },
+      chunksSortMode: 'dependency'
+    }),
+    new HappyPack({
+      id: 'eslint',
+      loaders: ['eslint-loader'],
+      threadPool: happyThreadPool,
+    }),
     new HappyPack({
       id: 'babel',
       loaders: [{
         loader: 'babel-loader',
         options: {
-          configFile: path.resolve(__dirname, 'babel.config.js'),
+          configFile: resolve('babel.config.js'),
           cacheDirectory: true,
         }
       }],
