@@ -4,9 +4,7 @@ const path = require('path');
 const packageConfig = require('../package.json');
 // const theme = require('../src/theme');
 
-exports.resolve = (dir) => {
-  return path.resolve(__dirname, '..', dir)
-}
+exports.resolve = (dir) => path.resolve(__dirname, '..', dir);
 
 exports.assetsPath = function (_path) {
   const assetsSubDirectory = process.env.NODE_ENV === 'production'

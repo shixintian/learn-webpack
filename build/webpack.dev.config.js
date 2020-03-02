@@ -1,18 +1,13 @@
 
 const merge = require('webpack-merge');
 const webpack = require('webpack');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const path = require('path');
-const utils = require('./utils');
+// const CopyWebpackPlugin = require('copy-webpack-plugin');
+// const path = require('path');
+// const utils = require('./utils');
 const baseWebpackConfig = require('./webpack.base.config');
 
 const mergeConfig = {
   mode: 'development',
-  module: {
-    rules: utils.styleLoaders({
-      sourceMap: false, usePostCSS: true
-    })
-  },
   devtool: 'cheap-module-eval-source-map',
   devServer: {
     clientLogLevel: 'warning',
@@ -43,17 +38,8 @@ const mergeConfig = {
   },
   plugins: [
     new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, '../static'),
-        to: 'static',
-        // ignore: ['*.dll.js']
-      }
-    ])
   ]
-}
+};
 
 const devWebpackConfig = merge(baseWebpackConfig, mergeConfig);
-console.log('devWebpackConfig', devWebpackConfig);
 module.exports = devWebpackConfig;
-

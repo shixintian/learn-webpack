@@ -1,5 +1,6 @@
 import React from 'react';
 import { Layout, Menu, Icon } from 'antd';
+import BaiscCon from '../components/common/BasicCon';
 
 const {
   Header, Content, Footer, Sider
@@ -35,11 +36,7 @@ const BaiscLayout = () => (
       <Header style={{ background: '#fff', padding: 0 }} />
       <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
         <div style={{ padding: 24, background: '#fff', textAlign: 'center' }}>
-          ...
-          <br />
-          Really
-          <br />
-          content
+          <BaiscCon />
         </div>
       </Content>
       <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
